@@ -1,28 +1,57 @@
 <script setup>
-import { ref } from 'vue';
+import { useRoute } from "vue-router";
 
-const activeTab = ref('home');
+const route = useRoute();
 
 const menuItems = [
-  { id: 'home', label: '홈', icon: 'ri-home-5-line', activeIcon: 'ri-home-5-fill' },
-  { id: 'analysis', label: '분석', icon: 'ri-pie-chart-2-line', activeIcon: 'ri-pie-chart-2-fill' },
-  { id: 'card', label: '카드', icon: 'ri-wallet-3-line', activeIcon: 'ri-wallet-3-fill' },
-  { id: 'history', label: '내역', icon: 'ri-calendar-todo-line', activeIcon: 'ri-calendar-todo-fill' },
+  {
+    id: "home",
+    label: "홈",
+    path: "/",
+    icon: "ri-home-line",
+    activeIcon: "ri-home-fill",
+  },
+  {
+    id: "analysis",
+    label: "분석",
+    path: "/analysis",
+    icon: "ri-line-chart-line",
+    activeIcon: "ri-line-chart-fill",
+  },
+  {
+    id: "card",
+    label: "카드",
+    path: "/card",
+    icon: "ri-bank-card-2-line",
+    activeIcon: "ri-bank-card-2-fill",
+  },
+  {
+    id: "history",
+    label: "설정",
+    path: "/settings",
+    icon: "ri-settings-3-line",
+    activeIcon: "ri-settings-3-fill",
+  },
 ];
+
+const isActive = (path) => {
+  if (path === "/") return route.path === "/";
+  return route.path.startsWith(path);
+};
 </script>
 
 <template>
   <nav class="bottom-tab">
-    <div 
-      v-for="item in menuItems" 
+    <router-link
+      v-for="item in menuItems"
       :key="item.id"
+      :to="item.path"
       class="tab-item"
-      :class="{ active: activeTab === item.id }"
-      @click="activeTab = item.id"
+      :class="{ active: isActive(item.path) }"
     >
-      <i :class="activeTab === item.id ? item.activeIcon : item.icon"></i>
+      <i :class="isActive(item.path) ? item.activeIcon : item.icon"></i>
       <span class="label">{{ item.label }}</span>
-    </div>
+    </router-link>
   </nav>
 </template>
 
@@ -33,15 +62,13 @@ const menuItems = [
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 50rem; // 민주님 앱 너비 기준
-  height: 7.2rem;
-  background-color: rgba($surface, 0.85); // variables.scss의 $surface 사용
-  backdrop-filter: blur(20px);
-  border-top: 1px solid $divider;
+  background-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 10px 0 rgba(59, 111, 210, 0.3);
   @include flex-between;
-  padding: 0 2rem;
-  padding-bottom: env(safe-area-inset-bottom); // 아이폰 하단 바 대응
+  max-height: 5.6rem;
+  height: 5.6rem;
   z-index: 100;
+  padding-inline: 3.6rem;
 
   .tab-item {
     @include flex-column;
@@ -49,8 +76,7 @@ const menuItems = [
     flex: 1;
     cursor: pointer;
     transition: all 0.2s ease;
-    gap: 0.4rem;
-    color: $secondary;
+    color: $gray-3;
 
     i {
       font-size: 2.4rem;
@@ -58,20 +84,15 @@ const menuItems = [
     }
 
     .label {
-      font-size: 1.1rem;
-      font-weight: 500;
+      display: none;
     }
 
     &.active {
       color: $primary;
-      
+
       i {
         transform: translateY(-0.2rem);
-        color: $lime; // 강조색으로 포인트!
-      }
-      
-      .label {
-        font-weight: 600;
+        color: $primary;
       }
     }
 

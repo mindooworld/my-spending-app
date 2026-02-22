@@ -1,0 +1,64 @@
+/* _reset.scss */
+@use './variables' as *;
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: $background;
+  color: $text;
+  font-family: 'Pretendard', sans-serif;
+  font-size: 1.4rem;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, p, span {
+  margin: 0;
+  padding: 0;
+}
+
+b, strong {
+  font-weight: 800;
+}
+
+// 리스트 스타일 제거
+ol, ul {
+  list-style: none;
+}
+
+// 링크 스타일 초기화
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+// 이미지 유연성 확보
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+// 폼 요소 초기화
+button, input, select, textarea {
+  font: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}

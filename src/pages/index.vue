@@ -1,113 +1,118 @@
+<script setup lang="ts">
+import { computed, ref } from "vue";
+import Header from "../components/main/Header.vue";
+import CategorySummary from "../components/main/CategorySummary.vue";
+import TransactionItem from "../components/card/TransactionItem.vue";
+import Nodata from "../components/base/Nodata.vue";
+
+const rawAmount = 4456320;
+
+const formattedAmount = computed(() => {
+  return new Intl.NumberFormat("ko-KR").format(rawAmount);
+});
+
+const categorySpending = ref({
+  식비: { target: 1000000, current: 640000, percent: 64 },
+  쇼핑: { target: 500000, current: 150000, percent: 30 },
+  공과금: { target: 300000, current: 240000, percent: 80 },
+});
+
+const transactions = ref([
+  {
+    id: 1,
+    title: "스타벅스 강남점",
+    date: "2026.02.21",
+    type: "food",
+    time: "14:30",
+    amount: 5500,
+    icon: "ri-restaurant-fill",
+  },
+  {
+    id: 2,
+    title: "현대백화점 쇼핑",
+    date: "2026.02.20",
+    type: "shopping",
+    time: "14:21",
+    amount: 125000,
+    icon: "ri-shopping-bag-4-fill",
+  },
+  {
+    id: 3,
+    title: "관리비 납부",
+    type: "utility",
+    date: "2026.02.15",
+    time: "11:36",
+    amount: 245000,
+    icon: "ri-drop-fill",
+  },
+  {
+    id: 4,
+    title: "유투브코리아 페이먼트",
+    type: "utility",
+    date: "2026.02.15",
+    time: "11:02",
+    amount: 16500,
+    icon: "ri-drop-fill",
+  },
+  {
+    id: 5,
+    title: "육탕상점 화곡점",
+    date: "2026.02.21",
+    type: "food",
+    time: "10:13",
+    amount: 25500,
+    icon: "ri-restaurant-fill",
+  },
+]);
+</script>
+
 <template>
   <main class="home-container">
-    <header class="header">
-      <div class="user-info">
-        <span class="date">2월 20일 금요일</span>
-        <h1 class="greeting">오늘도 행복한 하루 되세요, <br/>민주님!</h1>
-        <p class="status-msg">이번 달 예산이 <span class="highlight">15%</span> 남았어요</p>
-      </div>
-      <div class="profile-area">
-        <div class="avatar">
-          <div class="status-dot"></div>
-        </div>
-      </div>
-    </header>
+    <!-- 상단 -->
+    <Header sub-tit="오늘도 아끼는 하루 되세요," user-name="홍길동" />
 
+    <!-- 지출현황카드 -->
     <section class="total-spending">
-      <h2 class="section-title">이번 달 지출 현황</h2>
-      <div class="amount-card">
-        <span class="label">2월 총 소비</span>
-        <div class="value">2,450,000<span>원</span></div>
-        <div class="trend up">지난달보다 12% 더 썼어요</div>
+      <div class="pay-card">
+        <span class="label">이번 달 지출 현황</span>
+        <div class="amount-area">
+          <span class="currency-symbol">₩</span>
+          <span class="unit"
+            ><b class="amount">{{ formattedAmount }}</b
+            >원</span
+          >
+        </div>
       </div>
     </section>
 
-    </main>
+    <!-- 탭별 소비현황 -->
+    <CategorySummary :spendingData="categorySpending" />
+
+    <!-- 최근 이용 내역 -->
+    <section class="recent-transactions">
+      <div class="section-header">
+        <h3 class="section-title">최근 이용 내역</h3>
+        <button
+          v-if="transactions.length > 0"
+          class="btn-more"
+          @click="$emit('go-detail')"
+        >
+          <i class="ri-arrow-right-s-line"></i>
+        </button>
+      </div>
+
+      <!-- 리스트 -->
+      <div class="transaction-container">
+        <div v-if="transactions.length > 0" class="transaction-card">
+          <TransactionItem
+            v-for="item in transactions"
+            :key="item.id"
+            :transaction="item"
+          />
+        </div>
+
+        <Nodata v-else subText="이용내역이 없습니다." />
+      </div>
+    </section>
+  </main>
 </template>
-
-<style lang="scss" scoped>
-.home-container {
-  padding: 3.2rem 2.4rem;
-  padding-bottom: 10rem; // 하단 탭 여유 공간
-}
-
-.header {
-  @include flex-between;
-  margin-bottom: 4rem;
-
-  .date {
-    font-size: 1.2rem;
-    color: $secondary;
-  }
-
-  .greeting {
-    font-size: 2.2rem;
-    font-weight: 700;
-    line-height: 1.4;
-    margin-top: 0.8rem;
-  }
-
-  .status-msg {
-    font-size: 1.4rem;
-    color: $secondary;
-    margin-top: 0.4rem;
-    
-    .highlight {
-      color: $lime;
-      font-weight: 600;
-    }
-  }
-
-  .avatar {
-    width: 4.8rem;
-    height: 4.8rem;
-    border-radius: 50%;
-    background-color: $surface;
-    border: 1px solid $divider;
-    position: relative;
-
-    .status-dot {
-      position: absolute;
-      bottom: 0.2rem;
-      right: 0.2rem;
-      width: 1.2rem;
-      height: 1.2rem;
-      background-color: $lime;
-      border-radius: 50%;
-      border: 2px solid $background;
-    }
-  }
-}
-
-.total-spending {
-  .section-title {
-    font-size: 1.6rem;
-    font-weight: 600;
-    margin-bottom: 1.6rem;
-  }
-
-  .amount-card {
-    .label {
-      font-size: 1.4rem;
-      color: $secondary;
-    }
-
-    .value {
-      font-size: 4.2rem;
-      font-weight: 700;
-      letter-spacing: -0.05rem;
-      margin: 0.8rem 0;
-      
-      span {
-        font-size: 2.4rem;
-        margin-left: 0.4rem;
-      }
-    }
-
-    .trend {
-      font-size: 1.4rem;
-      &.up { color: $accent; }
-    }
-  }
-}
-</style>

@@ -1,12 +1,11 @@
 <script setup>
-import HomeIndex from './pages/index.vue'
-import BottomTab from './components/base/BottomTab.vue' // 추가
+import BottomTab from "./components/base/BottomTab.vue";
 </script>
 
 <template>
   <div class="app-wrapper">
-    <HomeIndex />
-    
+    <router-view />
+
     <BottomTab />
   </div>
 </template>
