@@ -9,8 +9,8 @@ const props = defineProps({
 const formatPrice = (val) => new Intl.NumberFormat("ko-KR").format(val);
 
 const badgeVariant = computed(() => {
-  if (props.item.tag.includes("+")) return "primary";
-  if (props.item.tag.includes("-")) return "secondary";
+  if (props.item.tag.includes("+")) return "bg-secondary";
+  if (props.item.tag.includes("-")) return "bg-error";
 
   return "gray";
 });

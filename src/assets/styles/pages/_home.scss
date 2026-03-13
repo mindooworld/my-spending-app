@@ -1,6 +1,17 @@
 @use "../variables" as *;
 @use "../mixins" as *;
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .home-container {
   padding: 3.2rem 2.4rem;
   padding-bottom: 10rem;
@@ -8,51 +19,77 @@
   flex-direction: column;
   gap: 24px;
 
+  > header,
+  > section,
+  > .category-summary {
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+
+  header {
+    animation-delay: 0.1s;
+  } // 헤더
   .total-spending {
-    .pay-card {
-      background-image: linear-gradient(120deg, #3b6fd2 54%, #8cc7d9 104%);
-      padding: 2.4rem 2rem;
-      border-radius: $radius-md;
-
-      .label {
-        font-size: 1.4rem;
-        color: #fff;
-        display: block;
-        margin-bottom: 1.2rem;
+    animation-delay: 0.3s;
+  } // 지출현황카드
+  .category-summary {
+    animation-delay: 0.4s;
+  } // 탭별 소비현황
+  .recent-transactions {
+    animation-delay: 0.5s;
+    .transaction-container {
+      .transaction-item {
+        animation-delay: 0.7s;
       }
+    }
+  } // 최근 이용 내역
+}
 
-      .amount-area {
+// 지출현황카드
+.total-spending {
+  .pay-card {
+    background-image: linear-gradient(120deg, #3b6fd2 54%, #8cc7d9 104%);
+    padding: 2.4rem 2rem;
+    border-radius: $radius-md;
+
+    .label {
+      font-size: 1.6rem;
+      color: #fff;
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+
+    .amount-area {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+
+      .currency-symbol {
+        font-size: 1.2rem;
+        width: 1.8rem;
+        height: 1.8rem;
+        font-weight: 500;
+        color: $primary;
+        background-color: #fff;
+        border-radius: 50%;
         display: flex;
         align-items: center;
-        gap: 0.8rem;
+        justify-content: center;
+        line-height: 1;
+      }
 
-        .currency-symbol {
-          font-size: 1.2rem;
-          width: 1.8rem;
-          height: 1.8rem;
-          font-weight: 500;
-          color: $primary;
-          background-color: #fff;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          line-height: 1;
-        }
+      .amount {
+        font-size: 3rem;
+        font-weight: 800;
+        letter-spacing: -0.05rem;
+        color: #fff;
+        margin-right: 0.4rem;
+      }
 
-        .amount {
-          font-size: 3rem;
-          font-weight: 800;
-          letter-spacing: -0.05rem;
-          color: #fff;
-          margin-right: 0.4rem;
-        }
-
-        .unit {
-          font-size: 1.8rem;
-          display: inline-block;
-          color: #fff;
-        }
+      .unit {
+        font-size: 1.8rem;
+        display: inline-block;
+        color: #fff;
       }
     }
   }
@@ -73,7 +110,7 @@
   margin-bottom: 1.6rem;
 
   .section-title {
-    font-size: 1.8rem;
+    font-size: 2.1rem;
     font-weight: 700;
     color: $text;
   }
@@ -119,10 +156,11 @@
     gap: 0.8rem;
     .tab-item {
       border-radius: $radius-sm;
-      padding-block: 0.8rem;
+      padding-block: 1rem;
       min-width: 11rem;
       background-color: rgba(255, 255, 255, 0.2);
       color: rgba($color: #fff, $alpha: 0.6);
+      font-size: 1.6rem;
       &.active {
         background-color: rgba($color: #fff, $alpha: 1);
         color: $primary;
@@ -137,6 +175,7 @@
 .habit-section {
   padding-inline: 2.4rem;
   box-sizing: border-box;
+  padding-bottom: 10rem;
   .habit-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -146,12 +185,16 @@
   }
 
   .notice-list {
-    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding-left: 2rem;
+    margin-top: 1.6rem;
     li {
-      font-size: 1.3rem;
-      color: #999;
+      font-size: 1.4rem;
+      color: $gray-1;
       list-style: disc;
-      line-height: 1.8;
+      line-height: 1;
       &::marker {
         font-size: 1rem;
       }

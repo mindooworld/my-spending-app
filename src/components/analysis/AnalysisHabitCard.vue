@@ -22,18 +22,13 @@ onMounted(() => {
     <div class="chart-wrapper">
       <svg viewBox="0 0 40 40" class="circular-chart">
         <circle cx="20" cy="20" r="17" class="circle-bg" />
-        <circle
-          cx="20"
-          cy="20"
-          r="17"
-          class="circle"
-          :style="{
-            stroke: item.color,
-            strokeDasharray: `${animatedPercent}, 100`,
-          }"
-        />
-        <text x="20" y="23" class="percentage">{{ item.percent }}%</text>
+        <circle cx="20" cy="20" r="17" class="circle" :style="{
+          stroke: item.color,
+          strokeDasharray: `${animatedPercent}, 100`,
+        }" />
+        <!-- <text x="20" y="20" class="percentage">{{ item.percent }}</text> -->
       </svg>
+      <span class="percentage"><b>{{ item.percent }}</b>%</span>
     </div>
   </div>
 </template>
@@ -56,34 +51,36 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
     margin-top: 1rem;
+    position: relative;
+
+    .percentage {
+      font-size: 1.6rem;
+      position: absolute;
+      font-weight: 700;
+      > b {
+        font-size: 2.8rem;
+      }
+    }
+
+    .circular-chart {
+      width: 100%;
+      max-width: 100%; // 부모 너비에 맞게 조정
+      transform: rotate(-90deg); // SVG 전체를 회전시킨 상태
+      overflow: visible;
+
+      .circle-bg {
+        fill: none;
+        stroke: $gray-bg;
+        stroke-width: 3;
+      }
+
+      .circle {
+        fill: none;
+        stroke-width: 3;
+        stroke-linecap: round;
+        transition: stroke-dasharray 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+    }
   }
-}
-.circular-chart {
-  width: 100%;
-  max-width: 13rem;
-  transform: rotate(-90deg);
-  overflow: visible;
-}
-
-.circle-bg {
-  fill: none;
-  stroke: $gray-bg;
-  stroke-width: 3;
-}
-
-.circle {
-  fill: none;
-  stroke-width: 3; // 배경과 동일하게
-  stroke-linecap: round;
-  transition: stroke-dasharray 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.percentage {
-  fill: #1e1e1e;
-  font-size: 0.6rem;
-  font-weight: 800;
-  text-anchor: middle;
-  transform: rotate(90deg);
-  transform-origin: center;
 }
 </style>

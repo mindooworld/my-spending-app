@@ -82,7 +82,7 @@ const chartOptions = computed(() => {
           :key="item.label" 
           :class="['info-item', { remaining: item.isAccent }]"
         >
-          <Badge :variant="item.isAccent ? 'accent' : 'gray'">
+          <Badge :variant="item.isAccent ? 'primary' : 'gray'">
             {{ item.label }}
           </Badge>
           <span :class="['amount', { highlight: item.isAccent }]">
@@ -118,7 +118,7 @@ const chartOptions = computed(() => {
       flex:1;
       font-size: 1.4rem;
       color: $gray-2;
-      padding-block: 0.8rem;
+      padding-block: 1rem;
       position: relative;
       transition: all 0.3s;
       border-radius: $radius-sm;

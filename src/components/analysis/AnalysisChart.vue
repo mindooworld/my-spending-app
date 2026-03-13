@@ -42,7 +42,7 @@ const chartOptions = computed(() => ({
     data: currentData.value.labels,
     axisLine: { show: false },
     axisTick: { show: false },
-    axisLabel: { color: "#fff", fontSize: 12 },
+    axisLabel: { color: "#fff", fontSize: 14 },
   },
   yAxis: { type: "value", show: false },
   series: [

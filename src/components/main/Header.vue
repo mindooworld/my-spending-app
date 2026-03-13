@@ -52,14 +52,14 @@ defineProps({
 
   .user-info {
     .sub-title {
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       color: $gray-1;
       margin-bottom: 0.8rem;
       display: inline-block;
     }
 
     .greeting {
-      font-size: 2.4rem;
+      font-size: 2.8rem;
       font-weight: 800;
       margin-bottom: 1rem;
     }

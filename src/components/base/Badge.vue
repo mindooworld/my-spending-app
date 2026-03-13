@@ -29,7 +29,7 @@ defineProps({
   padding: 0.4rem;
   border-radius: 0.4rem;
   gap: 0.4rem;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 500;
   
   .badge-icon {
@@ -58,6 +58,18 @@ defineProps({
   &.gray {
     background-color: rgba($gray-1, 0.1);
     color: $gray-1;
+  }
+  &.bg-primary {
+    background-color: $primary;
+    color: #fff;
+  }
+  &.bg-secondary {
+    background-color: $secondary;
+    color: #fff;
+  }
+  &.bg-error {
+    background-color: $error;
+    color: #fff;
   }
 }
 </style>

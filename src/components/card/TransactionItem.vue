@@ -82,13 +82,13 @@ const formatPrice = (val) => new Intl.NumberFormat("ko-KR").format(val);
 
     .info {
       .title {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         font-weight: 500;
         color: $text;
         margin-bottom: 0.4rem;
       }
       .date {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         color: $gray-2;
         display: flex;
         gap: 0.4rem;
